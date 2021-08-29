@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1043861289869",
+    "project_id": "quizup-eb990",
+    "storage_bucket": "quizup-eb990.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043861289869:android:9799be37c698285d279bc4",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1043861289869-691rjqknbn9gtgk3qvuljp5s2cj7fiaj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "5bbaee0b6fdce0b01de8d7453697d2dc5a18b2c7"
+          }
+        },
+        {
+          "client_id": "1043861289869-tfdftkv7f5t06smq6oaf0siekl5gnlre.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhLKtQboxHWCTBMqwTGLU09kynwHj6m7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1043861289869-tfdftkv7f5t06smq6oaf0siekl5gnlre.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
