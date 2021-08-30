@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"
+            app:startDestination="@id/homeFragment">
+
+    <fragment android:id="@+id/homeFragment" android:name="com.example.myapplication.HomeFragment"
+              android:label="fragment_home" tools:layout="@layout/fragment_home">
+        <action android:id="@+id/action_homeFragment_to_signIn" app:destination="@id/signIn"
+                app:popUpTo="@id/homeFragment"/>
+    </fragment>
+    <fragment android:id="@+id/signIn" android:name="com.example.myapplication.SignIn" android:label="fragment_sign_in"
+              tools:layout="@layout/fragment_sign_in"/>
+</navigation>
