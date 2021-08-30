@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="viewmodel"
                   type="com.example.myapplication.MainActivity"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".MainActivity">
@@ -21,6 +18,35 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
+        <Button
+                android:text="LOGIN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/button"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="476dp"
+                app:layout_constraintHorizontal_bias="0.498"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:hint="Email Address"
+                android:textAlignment="center"
+                android:id="@+id/editTextTextEmailAddress"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="200dp" android:gravity="center_horizontal"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:textAlignment="center"
+                android:ems="10"
+                android:id="@+id/editTextTextPassword"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/button" android:layout_marginBottom="128dp"
+                android:gravity="center_horizontal"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

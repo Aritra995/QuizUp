@@ -1,21 +1,29 @@
 package com.example.myapplication;
 
-import android.nfc.Tag;
+import android.content.DialogInterface;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.databinding.DataBindingUtil;
-import com.example.myapplication.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
-import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference myref = firebaseDatabase.getReference();
     private static final String TAG = "MainActivity";
+    private FirebaseAuth mAuth;
+    private String EMAIL;
+    private String PASSWORD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 String value = snapshot.getValue(String.class);
-                TextView textView = findViewById(R.id.text2);
-                textView.setText(value.toString());
+//                TextView textView = findViewById(R.id.text2);
+//                textView.setText(value.toString());
                 Log.d(TAG,"Value is: "+value);
             }
 
@@ -34,7 +42,72 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 //        myref.setValue("Hello from java application");
+        mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button login = findViewById(R.id.button);
+        login.setOnClickListener(this::onClick);
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if( currentUser != null ){
+            TextView textView = findViewById(R.id.text2);
+            textView.setText("Logged In");
+        }
+
+    }
+    private void updateUI(FirebaseUser user){
+
+    }
+    private void authentication(String email,String password){
+        mAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+//                            updateUI(user);
+                            TextView textView = findViewById(R.id.text2);
+                            textView.setText("Logged in as "+email);
+                            EditText email = findViewById(R.id.editTextTextEmailAddress);
+                            email.setVisibility(View.INVISIBLE);
+                            EditText password = findViewById(R.id.editTextTextPassword);
+                            password.setVisibility(View.INVISIBLE);
+                            Button login = findViewById(R.id.button);
+                            login.setVisibility(View.INVISIBLE);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+//                            updateUI(null);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.button:{
+                EditText email = findViewById(R.id.editTextTextEmailAddress);
+                EMAIL =  email.getText().toString();
+                EditText password = findViewById(R.id.editTextTextPassword);
+                PASSWORD= password.getText().toString();
+//                Button login = findViewById(R.id.button);
+                authentication(EMAIL,PASSWORD);
+//                login.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        authentication(EMAIL,PASSWORD,mAuth);
+//                    }
+//                });
+            }
+        }
+
     }
 }
