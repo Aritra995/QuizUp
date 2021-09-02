@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if(currentUser != null && currentUser.isEmailVerified()){
             Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
         }
     }
@@ -128,7 +128,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
+                            if( user.isEmailVerified() ){
+                                Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
+                            }else{
+                                Intent intent =new Intent(getActivity(),EmailValidationActivity.class);
+                                getActivity().startActivity(intent);
+                            }
 
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
