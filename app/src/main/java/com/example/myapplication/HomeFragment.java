@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -64,7 +65,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         VIEW = view;
         mAuth = FirebaseAuth.getInstance();
         textView = view.findViewById(R.id.Login_tosignup);
-        textView.setOnClickListener(this::onClick);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),SignUpActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
         textView_title = view.findViewById(R.id.textView5);
         bottomLine = view.findViewById(R.id.textView);
         email = view.findViewById(R.id.loginEmail);
@@ -87,33 +94,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.loginButton:{
-                if( login.getText().toString().length() == 6 ){
-                    // signup logic
-                    login.setText("LOGIN");
-                    textView_title.setText("LOGIN");
-                    textView.setText("Sign Up");
-                    bottomLine.setText("Don't have an account ?");
+                if( emailValidator(email,view) && password.getText().toString().length() >=6){
+                    loginAuthentication(email.getText().toString(),password.getText().toString());
                 }
-                else{
-                    if( emailValidator(email,view) && password.getText().toString().length() >=6){
-                        loginAuthentication(email.getText().toString(),password.getText().toString());
-                    }
-                    else {
-                        //view.findViewById(R.id.textView3).setVisibility(View.VISIBLE);
-                        Toast.makeText(getActivity(),"Invalid email address or password",Toast.LENGTH_LONG).show();
-                    }
+                else {
+                    Toast.makeText(getActivity(),"Invalid email address or password",Toast.LENGTH_LONG).show();
                 }
             }
             case R.id.Login_tosignup:{
                 //Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_signIn);
-                login.setText("SIGNUP");
-                //login.setId(Integer.parseInt("signupButton"));
-                textView_title.setText("SIGNUP");
-                //textView_title.setId(Integer.parseInt("signupTitle"));
-                textView.setText("Log In");
-                //textView.setId(Integer.parseInt("signupLink"));
-                bottomLine.setText("Already have an account ?");
-                //bottomLine.setId(Integer.parseInt("signupLine"));
             }
         }
 
@@ -140,10 +129,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private boolean emailValidator(EditText email,View view){
         String emailText = email.getText().toString();
         if( !emailText.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailText).matches()){
-            //view.findViewById(R.id.textView2).setVisibility(View.INVISIBLE);
             return true;
         }else{
-            //view.findViewById(R.id.textView2).setVisibility(View.VISIBLE);
             return false;
         }
     }
