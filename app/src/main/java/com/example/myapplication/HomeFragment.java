@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     EditText email;
     EditText password;
     Button login;
-    TextView textView,textView_title,bottomLine;
+    TextView textView,textView_title,bottomLine,forgotPassword;
     private String mParam1;
     private String mParam2;
     private View VIEW;
@@ -70,6 +70,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),SignUpActivity.class);
                 getActivity().startActivity(intent);
+            }
+        });
+        forgotPassword = view.findViewById(R.id.forgotPassword);
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if( emailValidator(email,view) ){
+                    resetPassword(email.getText().toString());
+                }else{
+                    Toast.makeText(getActivity(),"Enter a valid email address",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
         textView_title = view.findViewById(R.id.textView5);
@@ -120,7 +132,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
                         } else {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getActivity(), "Authentication failed.",
+                            Toast.makeText(getActivity(), "Authentication failed.Signup or check password",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -133,6 +145,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         }else{
             return false;
         }
+    }
+    private void resetPassword(String emailAddress){
+        mAuth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                            Toast.makeText(getActivity(),"Email sent.Check Inbox",Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(getActivity(),"Email not registered.Signup first",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
     private void setLoggedIn(boolean value) {
         this.loggedIn = value;
