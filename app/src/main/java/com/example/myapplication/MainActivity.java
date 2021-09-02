@@ -3,10 +3,7 @@ package com.example.myapplication;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,8 +42,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Button login = findViewById(R.id.button);
-//        login.setOnClickListener(this::onClick);
+//        getSupportFragmentManager().beginTransaction().add(R.id.myNavHostFragment,new HomeFragment()).commit();
+//        SignIn SiginFragmment = (SignIn) getSupportFragmentManager().findFragmentById(R.id.signIn);
+//        View frag =  SiginFragmment.getView();
+//        Button signin = frag.findViewById(R.id.buttonSignup);
+//        signin.setOnClickListener(this::onClick);
+//        Button signup = findViewById(R.id.buttonSignup);
+//        signup.setOnClickListener(this::onClick);
 //        Button logout = findViewById(R.id.button2);
 //        logout.setOnClickListener(this::onClick);
     }
@@ -107,13 +109,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    public void onComplete(@NonNull Task<AuthResult> task) {
 //                        if (task.isSuccessful()) {
 //                            // Sign in success, update UI with the signed-in user's information
-//                            Log.d(TAG, "createUserWithEmail:success");
+//
 //                            FirebaseUser user = mAuth.getCurrentUser();
+//                            Log.d(TAG, "createUserWithEmail:success"+user.getDisplayName());
 ////                            updateUI(user);
-//                            TextView textView = findViewById(R.id.text2);
-//                            textView.setText("Logged in as "+user.getDisplayName());
-//                            hideUpdateUI(user);
-//                            showLogout();
+////                            TextView textView = findViewById(R.id.text2);
+////                            textView.setText("Logged in as "+user.getDisplayName());
+////                            hideUpdateUI(user);
+////                            showLogout();
 //
 //                        } else {
 //                            // If sign in fails, display a message to the user.
@@ -129,10 +132,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 //        switch (view.getId()){
-//            case R.id.button:{
-//                EditText email = findViewById(R.id.editTextTextEmailAddress);
+//            case R.id.buttonSignup:{
+//                SignIn SiginFragmment = (SignIn) getSupportFragmentManager().findFragmentById(R.id.signIn);
+//                View frag_view = SiginFragmment.getView();
+//                EditText email = frag_view.findViewById(R.id.editTextTextEmailAddressSignUp);
+//                String EMAIL = email.getText().toString();
+//            }
+//        }
+//        switch (view.getId()){
+//            case R.id.buttonSignup:{
+//                EditText email = findViewById(R.id.editTextTextEmailAddressSignUp);
 //                EMAIL =  email.getText().toString();
-//                EditText password = findViewById(R.id.editTextTextPassword);
+//                EditText password = findViewById(R.id.editTextTextPasswordSignUp);
 //                PASSWORD= password.getText().toString();
 ////                Button login = findViewById(R.id.button);
 //                authentication(EMAIL,PASSWORD);
@@ -143,9 +154,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 ////                    }
 ////                });
 //            }
-//            case R.id.button2:{
-//                signOut();
-//            }
+////            case R.id.button2:{
+////                signOut();
+////            }
 //        }
 
     }
