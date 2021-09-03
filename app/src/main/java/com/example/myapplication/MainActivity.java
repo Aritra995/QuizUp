@@ -24,20 +24,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        myref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                String value = snapshot.getValue(String.class);
-//                TextView textView = findViewById(R.id.text2);
-//                textView.setText(value.toString());
-                Log.d(TAG,"Value is: "+value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.w(TAG,"Failed to read value: ",error.toException());
-            }
-        });
+//        myref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                String value = snapshot.getValue(String.class);
+////                TextView textView = findViewById(R.id.text2);
+////                textView.setText(value.toString());
+//                Log.d(TAG,"Value is: "+value);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError error) {
+//                Log.w(TAG,"Failed to read value: ",error.toException());
+//            }
+//        });
 //        myref.setValue("Hello from java application");
         mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);

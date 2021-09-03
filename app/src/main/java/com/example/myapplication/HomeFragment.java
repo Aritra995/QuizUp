@@ -21,11 +21,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeFragment extends Fragment implements View.OnClickListener{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "MainActivity";
-
+    private DatabaseReference adminReference;
     FirebaseAuth mAuth;
     EditText email;
     EditText password;
@@ -36,6 +41,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private View VIEW;
     FrameLayout frameLayout;
     private static boolean loggedIn;
+    private boolean admin;
+    List<String> adminList = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -64,6 +71,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         VIEW = view;
         mAuth = FirebaseAuth.getInstance();
+        adminReference = FirebaseDatabase.getInstance().getReference().child("adminUsers");
         textView = view.findViewById(R.id.Login_tosignup);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +98,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         password = view.findViewById(R.id.loginPassword);
         login = view.findViewById(R.id.loginButton);
         login.setOnClickListener(this::onClick);
+        admin = false;
         return view;
     }
 
@@ -98,7 +107,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null && currentUser.isEmailVerified()){
-            Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
+            adminCheck();
+            //Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
         }
     }
 
@@ -129,7 +139,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             if( user.isEmailVerified() ){
-                                Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
+                                adminCheck();
                             }else{
                                 Intent intent =new Intent(getActivity(),EmailValidationActivity.class);
                                 getActivity().startActivity(intent);
@@ -142,6 +152,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         }
                     }
                 });
+    }
+    private void adminCheck(){
+        adminReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                adminList.clear();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    if( currentUser.getUid().equals(dataSnapshot.getValue().toString()) ){
+                        Intent intent = new Intent(getActivity(),TeachersPortalActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        getActivity().startActivity(intent);
+                    }
+                }
+                Log.d(TAG, "Redirecting to non-admin home screen");
+                Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
     private boolean emailValidator(EditText email,View view){
         String emailText = email.getText().toString();
