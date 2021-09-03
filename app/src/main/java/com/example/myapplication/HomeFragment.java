@@ -35,6 +35,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     EditText email;
     EditText password;
     Button login;
+    ProgressBar progressBar;
     TextView textView,textView_title,bottomLine,forgotPassword;
     private String mParam1;
     private String mParam2;
@@ -99,6 +100,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         login = view.findViewById(R.id.loginButton);
         login.setOnClickListener(this::onClick);
         admin = false;
+        progressBar = view.findViewById(R.id.progressBar);
         return view;
     }
 
@@ -154,6 +156,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 });
     }
     private void adminCheck(){
+        progressBar.setVisibility(View.VISIBLE);
         adminReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -161,11 +164,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     if( currentUser.getUid().equals(dataSnapshot.getValue().toString()) ){
+                        progressBar.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(getActivity(),TeachersPortalActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         getActivity().startActivity(intent);
                     }
                 }
+                progressBar.setVisibility(View.INVISIBLE);
                 Log.d(TAG, "Redirecting to non-admin home screen");
                 Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
             }

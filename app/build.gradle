@@ -12,6 +12,7 @@ android {
         applicationId "com.example.myapplication"
         minSdkVersion 16
         targetSdkVersion 30
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
 
@@ -36,6 +37,8 @@ android {
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     def nav_version = "2.3.5"
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -50,4 +53,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
