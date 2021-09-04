@@ -186,9 +186,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         password.setFocusable(false);
         login.setFocusable(false);
     }
-    private void enable(){
 
-    }
     private boolean emailValidator(EditText email,View view){
         String emailText = email.getText().toString();
         if( !emailText.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(emailText).matches()){
