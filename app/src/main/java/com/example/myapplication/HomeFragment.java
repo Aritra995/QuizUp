@@ -109,6 +109,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null && currentUser.isEmailVerified()){
+            disable();
             adminCheck();
             //Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
         }
@@ -179,6 +180,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             }
         });
+    }
+    private void disable(){
+        email.setFocusable(false);
+        password.setFocusable(false);
+        login.setFocusable(false);
+    }
+    private void enable(){
+
     }
     private boolean emailValidator(EditText email,View view){
         String emailText = email.getText().toString();
