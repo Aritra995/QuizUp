@@ -11,7 +11,8 @@
             android:theme="@style/Theme.MyApplication">
         <activity
                 android:name=".TeachersPortalActivity"
-                android:screenOrientation="portrait">
+                android:screenOrientation="portrait"
+                android:theme="@style/Theme.MyApplication.NoActionBar">
         </activity>
         <activity
                 android:name=".EmailValidationActivity"

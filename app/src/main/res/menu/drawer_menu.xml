@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/quizHistory"
+              android:icon="@drawable/ic_menu_gallery"
+              android:title="History"/>
+        <item android:id="@+id/quizes"
+              android:icon="@drawable/ic_menu_camera"
+              android:title="Quizzes"/>
+    </group>
+    <item android:title="Manage Account">
+        <menu>
+            <item android:id="@+id/logout"
+                  android:title="Logout"/>
+            <item android:id="@+id/resetPassword"
+                  android:title="Password change"/>
+        </menu>
+    </item>
+</menu>
