@@ -8,6 +8,7 @@
         tools:context=".SignUpActivity">
     <Button
             android:text="@string/signup"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:backgroundTint="#191970"
             android:layout_height="wrap_content" android:id="@+id/buttonSignup"

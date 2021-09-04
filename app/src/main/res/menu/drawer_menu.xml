@@ -4,17 +4,19 @@
       tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item android:id="@+id/quizHistory"
-              android:icon="@drawable/ic_menu_gallery"
+              android:icon="@drawable/baseline_history_24"
               android:title="History"/>
         <item android:id="@+id/quizes"
-              android:icon="@drawable/ic_menu_camera"
+              android:icon="@drawable/baseline_assignment_24"
               android:title="Quizzes"/>
     </group>
     <item android:title="Manage Account">
         <menu>
             <item android:id="@+id/logout"
+                  android:icon="@drawable/baseline_logout_24"
                   android:title="Logout"/>
             <item android:id="@+id/resetPassword"
+                  android:icon="@drawable/baseline_lock_24"
                   android:title="Password change"/>
         </menu>
     </item>
