@@ -3,6 +3,9 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
+        <item android:id="@+id/teacherHome"
+              android:icon="@drawable/baseline_home_24"
+              android:title="Home"/>
         <item android:id="@+id/quizHistory"
               android:icon="@drawable/baseline_history_24"
               android:title="History"/>

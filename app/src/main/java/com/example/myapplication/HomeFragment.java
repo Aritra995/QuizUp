@@ -1,8 +1,11 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.widget.*;
@@ -43,6 +46,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     FrameLayout frameLayout;
     private static boolean loggedIn;
     private boolean admin;
+    ImageButton passwordtoggle;
     List<String> adminList = new ArrayList<>();
 
     public HomeFragment() {
@@ -101,6 +105,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         login.setOnClickListener(this::onClick);
         admin = false;
         progressBar = view.findViewById(R.id.progressBar);
+        passwordtoggle = view.findViewById(R.id.passwordToggle);
+        passwordtoggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(passwordtoggle.getTag().equals("show")) {
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    passwordtoggle.setImageResource(R.drawable.baseline_visibility_off_24);
+                    passwordtoggle.setTag("hide");
+                }else{
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    passwordtoggle.setImageResource(R.drawable.baseline_visibility_24);
+                    passwordtoggle.setTag("show");
+                }
+            }
+        });
         return view;
     }
 

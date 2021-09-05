@@ -6,8 +6,7 @@
              tools:context=".HomeFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:passwordToggleEnabled="true">
+            android:layout_height="match_parent">
         <TextView
                 android:id="@+id/text2"
                 android:layout_width="wrap_content"
@@ -29,21 +28,23 @@
                 app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="424dp"
                 app:layout_constraintHorizontal_bias="0.498"/>
         <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="246dp"
+                android:layout_height="41dp"
                 android:inputType="textEmailAddress"
                 android:ems="10"
                 android:hint="Email Address"
                 android:padding="10dp"
                 android:background="@drawable/rounded_edittext"
+                android:drawableLeft="@drawable/baseline_person_24"
                 android:textAlignment="center"
                 android:id="@+id/loginEmail"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="244dp" android:gravity="center_horizontal"/>
+
         <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="246dp"
+                android:layout_height="41dp"
                 android:inputType="textPassword"
                 android:hint="Password"
                 android:padding="10dp"
@@ -51,9 +52,12 @@
                 android:textAlignment="center"
                 android:ems="10"
                 android:id="@+id/loginPassword"
+                android:drawableLeft="@drawable/baseline_lock_24"
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/loginButton" android:layout_marginBottom="72dp"
                 android:gravity="center_horizontal"/>
+
+
         <TextView
                 android:text="Don't have an account ?"
                 android:textColor="@color/black"
@@ -126,6 +130,15 @@
                 app:layout_constraintEnd_toStartOf="@+id/loginPassword"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
                 app:layout_constraintBottom_toTopOf="@+id/textView3"/>
+        <ImageButton
+                app:srcCompat="@drawable/baseline_visibility_24"
+                android:background="@color/white"
+                android:layout_width="38dp"
+                android:tag="show"
+                android:layout_height="36dp" android:id="@+id/passwordToggle"
+                app:layout_constraintEnd_toEndOf="@+id/loginPassword"
+                app:layout_constraintTop_toTopOf="@+id/loginPassword"
+                android:layout_marginTop="4dp" android:layout_marginEnd="12dp" android:layout_marginRight="12dp"/>
 
         <!--android:backgroundTint="@color/white"
                         android:textColor="@color/light_blue_600"-->

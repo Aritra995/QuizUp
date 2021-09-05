@@ -1,13 +1,12 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +21,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     Button signup;
     TextView loginText;
     private FirebaseAuth mAuth;
+    ImageButton passwordtoggle;
     private static final String TAG = "SignUpActivity";
 
     @Override
@@ -39,6 +39,21 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             public void onClick(View view) {
                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                 startActivity(intent);
+            }
+        });
+        passwordtoggle = findViewById(R.id.passwordToggle);
+        passwordtoggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(passwordtoggle.getTag().equals("show")) {
+                    Password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    passwordtoggle.setImageResource(R.drawable.baseline_visibility_off_24);
+                    passwordtoggle.setTag("hide");
+                }else{
+                    Password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    passwordtoggle.setImageResource(R.drawable.baseline_visibility_24);
+                    passwordtoggle.setTag("show");
+                }
             }
         });
     }

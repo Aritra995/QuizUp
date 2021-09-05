@@ -29,8 +29,7 @@ public class TeachersPortalActivity extends AppCompatActivity implements Navigat
     private DrawerLayout drawer;
     private static final String TAG = "TeachersPortalActivity";
     FirebaseUser currentUser;
-//    TextView userEmail;
-//    ImageView userDp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();

@@ -17,31 +17,42 @@
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="412dp"
             app:layout_constraintHorizontal_bias="0.489"/>
     <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="246dp"
+            android:layout_height="41dp"
             android:inputType="textEmailAddress"
             android:ems="10"
             android:hint="Email Address"
             android:padding="10dp"
             android:background="@drawable/rounded_edittext"
+            android:drawableLeft="@drawable/baseline_person_24"
             android:textAlignment="center"
             android:id="@+id/editTextTextEmailAddressSignUp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="244dp" android:gravity="center_horizontal"/>
     <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="246dp"
+            android:layout_height="41dp"
             android:inputType="textPassword"
             android:hint="Password"
             android:padding="10dp"
             android:background="@drawable/rounded_edittext"
+            android:drawableLeft="@drawable/baseline_lock_24"
             android:textAlignment="center"
             android:ems="10"
             android:id="@+id/editTextTextPasswordSignUp"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center_horizontal" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="316dp"/>
+    <ImageButton
+            app:srcCompat="@drawable/baseline_visibility_24"
+            android:background="@color/white"
+            android:layout_width="38dp"
+            android:tag="show"
+            android:layout_height="36dp" android:id="@+id/passwordToggle"
+            app:layout_constraintEnd_toEndOf="@+id/editTextTextPasswordSignUp"
+            app:layout_constraintTop_toTopOf="@+id/editTextTextPasswordSignUp"
+            android:layout_marginTop="4dp" android:layout_marginEnd="12dp" android:layout_marginRight="12dp"/>
     <TextView
             android:text="QuizUp"
             android:textStyle="bold|italic"
