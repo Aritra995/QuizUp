@@ -6,6 +6,8 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -19,25 +21,41 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 public class TeachersPortalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth mAuth;
     private DrawerLayout drawer;
     private static final String TAG = "TeachersPortalActivity";
+    FirebaseUser currentUser;
+//    TextView userEmail;
+//    ImageView userDp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teachers_portal);
+
         Toolbar toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
+
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,
                 R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView userEmail = headerView.findViewById(R.id.user_email);
+        userEmail.setText(currentUser.getEmail());
+//        ImageView userDp = headerView.findViewById(R.id.userDp);
+//        Log.d(TAG,"url: "+currentUser.getPhotoUrl());
+//        Picasso.get().load(currentUser.getPhotoUrl()).into(userDp);
         toggle.syncState();
     }
 
@@ -60,7 +78,6 @@ public class TeachersPortalActivity extends AppCompatActivity implements Navigat
                 startActivity(intent);
                 break;
             case R.id.resetPassword:
-                FirebaseUser currentUser = mAuth.getCurrentUser();
                 resetPassword(currentUser.getEmail());
                 break;
         }
