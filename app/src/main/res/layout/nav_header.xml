@@ -7,16 +7,24 @@
               android:padding="10dp"
               android:theme="@style/ThemeOverlay.AppCompat.Dark"
               android:gravity="bottom">
-    <ImageView android:id="@+id/userDp"
-               android:layout_width="wrap_content" android:layout_height="wrap_content"
-               app:srcCompat="@drawable/ic_launcher_foreground"
-               android:background="@color/white"/>
+    <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_launcher_foreground"
+    />
+<!--    <ImageView android:id="@+id/userDp"-->
+<!--               android:layout_width="wrap_content" android:layout_height="wrap_content"-->
+<!--               app:srcCompat="@drawable/ic_launcher_foreground"-->
+<!--               android:background="@color/white"/>-->
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:paddingTop="8dp"
+              android:paddingLeft="10dp"
               android:text="@string/app_name"
               android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
     <TextView android:id="@+id/user_email"
-              android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingLeft="10dp"
               android:text="info@gmail.com"/>
 
 

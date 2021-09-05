@@ -13,7 +13,7 @@
     <fragment android:id="@+id/userHomeFragment" android:name="com.example.myapplication.UserHomeFragment"
               android:label="fragment_user_home" tools:layout="@layout/fragment_user_home">
         <action android:id="@+id/action_userHomeFragment_to_homeFragment" app:destination="@id/homeFragment"
-                app:enterAnim="@anim/fragment_close_enter" app:popUpTo="@id/homeFragment"
+                app:enterAnim="@android:anim/slide_in_left" app:popUpTo="@id/homeFragment"
                 app:popUpToInclusive="true"/>
     </fragment>
 </navigation>
