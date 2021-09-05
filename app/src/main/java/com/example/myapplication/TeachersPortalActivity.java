@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,13 +14,17 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import org.jetbrains.annotations.NotNull;
 
 public class TeachersPortalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth mAuth;
     private DrawerLayout drawer;
+    private static final String TAG = "TeachersPortalActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
@@ -53,8 +59,26 @@ public class TeachersPortalActivity extends AppCompatActivity implements Navigat
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 break;
+            case R.id.resetPassword:
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                resetPassword(currentUser.getEmail());
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    private void resetPassword(String emailAddress){
+        mAuth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                            Toast.makeText(TeachersPortalActivity.this,"Email sent.Check Inbox",Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(TeachersPortalActivity.this,"Email not registered.Signup first",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 }
