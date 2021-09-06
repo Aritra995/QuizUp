@@ -192,7 +192,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 }
                 progressBar.setVisibility(View.INVISIBLE);
                 Log.d(TAG, "Redirecting to non-admin home screen");
-                Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
+                Intent intent = new Intent(getActivity(),StudentsPortalActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                getActivity().startActivity(intent);
+                //Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

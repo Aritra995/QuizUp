@@ -15,12 +15,12 @@
     </group>
     <item android:title="Manage Account">
         <menu>
-            <item android:id="@+id/logout"
-                  android:icon="@drawable/baseline_logout_24"
-                  android:title="Logout"/>
             <item android:id="@+id/resetPassword"
                   android:icon="@drawable/baseline_lock_24"
                   android:title="Password change"/>
+            <item android:id="@+id/logout"
+                  android:icon="@drawable/baseline_logout_24"
+                  android:title="Logout"/>
         </menu>
     </item>
 </menu>
