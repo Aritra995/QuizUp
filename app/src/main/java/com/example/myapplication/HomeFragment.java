@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         password = view.findViewById(R.id.loginPassword);
         login = view.findViewById(R.id.loginButton);
         login.setOnClickListener(this::onClick);
-        admin = false;
+        setAdmin(false);
         progressBar = view.findViewById(R.id.progressBar);
         passwordtoggle = view.findViewById(R.id.passwordToggle);
         passwordtoggle.setOnClickListener(new View.OnClickListener() {
@@ -184,17 +184,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                     if( currentUser.getUid().equals(dataSnapshot.getValue().toString()) ){
+                        setAdmin(true);
+                        Log.d(TAG,"Something from here");
                         progressBar.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(getActivity(),TeachersPortalActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        getActivity().startActivity(intent);
+                        getContext().startActivity(intent);
+//                        break;
                     }
                 }
-                progressBar.setVisibility(View.INVISIBLE);
-                Log.d(TAG, "Redirecting to non-admin home screen");
-                Intent intent = new Intent(getActivity(),StudentsPortalActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                getActivity().startActivity(intent);
+                if( isAdmin() == false ) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Log.d(TAG, "Redirecting to non-admin home screen");
+                    Intent intent = new Intent(getActivity(),StudentsPortalActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    getActivity().startActivity(intent);
+                }
+                //redirect("student");
+//                Intent intent = new Intent(getActivity(),StudentsPortalActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                getActivity().startActivity(intent);
                 //Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
             }
             @Override
@@ -202,6 +211,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             }
         });
+    }
+    private void redirect(String userType){
+        switch (userType){
+//            case "teacher":
+//                Intent intent = new Intent(getActivity(),TeachersPortalActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                getActivity().startActivity(intent);
+//                break;
+            case "student":
+                Intent intent = new Intent(getActivity(),StudentsPortalActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
     private void disable(){
         email.setFocusable(false);
@@ -237,5 +262,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private boolean getLoggedIn() {
         return loggedIn;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }
