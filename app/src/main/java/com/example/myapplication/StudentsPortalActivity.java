@@ -18,7 +18,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
 
 public class StudentsPortalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private FirebaseAuth mAuth;
@@ -49,6 +52,25 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
         userEmail.setText(currentUser.getEmail());
 
         toggle.syncState();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("questions").child("General Knowledge");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    Questions questionsModal = dataSnapshot.getValue(Questions.class);
+                    String txt = "Q1: "+  questionsModal.getStatement()+" a. "+questionsModal.getA1()+"b. "+questionsModal.getA2()
+                            +" c. "+questionsModal.getA3()+" d. "+questionsModal.getA4()+" ans. "+questionsModal.getCorrect();
+                    Log.d(TAG,txt);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
