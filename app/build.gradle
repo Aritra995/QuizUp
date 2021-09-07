@@ -56,4 +56,5 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
+    implementation "androidx.cardview:cardview:1.0.0"
 }

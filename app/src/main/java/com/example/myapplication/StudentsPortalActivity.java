@@ -62,7 +62,6 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
                     String txt = "Q1: "+  questionsModal.getStatement()+" a. "+questionsModal.getA1()+"b. "+questionsModal.getA2()
                             +" c. "+questionsModal.getA3()+" d. "+questionsModal.getA4()+" ans. "+questionsModal.getCorrect();
                     Log.d(TAG,txt);
-
                 }
             }
 
