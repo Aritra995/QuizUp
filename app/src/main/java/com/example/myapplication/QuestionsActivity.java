@@ -1,9 +1,12 @@
 package com.example.myapplication;
 
+import android.os.Build;
 import android.util.Log;
+import android.view.Window;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.*;
@@ -18,8 +21,17 @@ public class QuestionsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Window window = getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setStatusBarColor(getResources().getColor(R.color.app_bar_color));
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
+
+        Toolbar toolbar = findViewById(R.id.toolBarQuiz);
+        setSupportActionBar(toolbar);
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

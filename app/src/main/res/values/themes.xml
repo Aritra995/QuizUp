@@ -30,6 +30,7 @@
     </style>
     <style name="QuizPlayTheme">
         <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/app_bar_color</item>
     </style>
     <style name="Theme.MyApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
