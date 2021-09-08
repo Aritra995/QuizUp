@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +38,27 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
         holder.a2.setText(question.getA2());
         holder.a3.setText(question.getA3());
         holder.a4.setText(question.getA4());
+
+        if( holder.a1.isChecked() ){
+            holder.a2.setChecked(false);
+            holder.a3.setChecked(false);
+            holder.a4.setChecked(false);
+        }
+        else if(holder.a2.isChecked()){
+            holder.a1.setChecked(false);
+            holder.a3.setChecked(false);
+            holder.a4.setChecked(false);
+        }
+        else if(holder.a3.isChecked()){
+            holder.a1.setChecked(false);
+            holder.a2.setChecked(false);
+            holder.a4.setChecked(false);
+        }
+        else if(holder.a4.isChecked()){
+            holder.a1.setChecked(false);
+            holder.a2.setChecked(false);
+            holder.a3.setChecked(false);
+        }
     }
 
     @Override
@@ -47,6 +69,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView question;
         RadioButton a1,a2,a3,a4;
+        //RadioGroup optionRadioGroup;
 
         public MyViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -55,6 +78,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
             a2 = itemView.findViewById(R.id.option2);
             a3 = itemView.findViewById(R.id.option3);
             a4 = itemView.findViewById(R.id.option4);
+            //optionRadioGroup = itemView.findViewById(R.id.optionRadioGroup);
         }
     }
 }

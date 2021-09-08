@@ -22,30 +22,33 @@
                       android:layout_gravity="center_vertical"
                       android:layout_marginTop="8dp"
                       android:orientation="vertical">
-            <RadioButton
-                    android:id="@+id/option1"
+            <RadioGroup
+                    android:id="@+id/optionRadioGroup"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="Option1"/>
-            <RadioButton
-                    android:id="@+id/option2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="Option2"/>
-            <RadioButton
-                    android:id="@+id/option3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="Option3"/>
-            <RadioButton
-                    android:id="@+id/option4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="Option4"/>
+                    android:layout_height="wrap_content">
+                <RadioButton
+                        android:id="@+id/option1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Option1"/>
+                <RadioButton
+                        android:id="@+id/option2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Option2"/>
+                <RadioButton
+                        android:id="@+id/option3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Option3"/>
+                <RadioButton
+                        android:id="@+id/option4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Option4"/>
+            </RadioGroup>
+
         </LinearLayout>
 
     </LinearLayout>

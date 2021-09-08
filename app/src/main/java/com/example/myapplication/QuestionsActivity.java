@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.os.Build;
 import android.util.Log;
 import android.view.Window;
+import android.widget.RadioButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,9 +19,11 @@ public class QuestionsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     QuestionsAdapter adapter;
     ArrayList<Questions> list;
+    RadioButton option1,option2,option3,option4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // updating status bar color for api 21 and above
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(getResources().getColor(R.color.app_bar_color));
@@ -39,6 +42,7 @@ public class QuestionsActivity extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new QuestionsAdapter(this,list);
         recyclerView.setAdapter(adapter);
+
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("questions").child("General Knowledge");
         reference.addValueEventListener(new ValueEventListener() {
