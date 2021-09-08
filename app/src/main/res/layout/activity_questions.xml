@@ -16,6 +16,32 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 android:elevation="4dp"/>
+        <androidx.cardview.widget.CardView
+                android:id="@+id/topCardView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+            <Button
+                    android:id="@+id/endTestButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="End test"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="end"
+                    android:background="@drawable/rounded_edittext"
+                    android:backgroundTint="@color/red_button"
+                    android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15:00"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/app_bar_color"
+                android:textSize="20dp"/>
+
+
+        </androidx.cardview.widget.CardView>
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
