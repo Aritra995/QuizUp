@@ -12,6 +12,11 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.MyApplication">
         <activity
+                android:name=".QuestionsActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/Theme.MyApplication.NoActionBar">
+        </activity>
+        <activity
                 android:name=".StudentsPortalActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/Theme.MyApplication.NoActionBar">

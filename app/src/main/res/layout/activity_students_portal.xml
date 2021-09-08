@@ -32,41 +32,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardElevation="20dp"
-                    app:cardCornerRadius="30dp"
-                    android:layout_margin="10dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardMaxElevation="12dp"
-                    app:cardPreventCornerOverlap="true"
-                    app:cardUseCompatPadding="true"
-                    tools:ignore="MissingConstraints">
-                <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
-                        android:src="@mipmap/ic_gkbanner"
-                        android:layout_margin="10dp"
-                        android:id="@+id/img"
-                        android:contentDescription="@string/app_name" />
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="General Knowledge Booster"
-                        android:textColor="@color/app_bar_color"
-                        android:layout_gravity="bottom|center_horizontal"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                />
-            </androidx.cardview.widget.CardView>
-
-
-
+            <Button
+                    android:text="Take Quiz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/takeQuiz"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="100dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

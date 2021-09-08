@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,17 +20,23 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class StudentsPortalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private FirebaseAuth mAuth;
     private DrawerLayout drawer;
     private static final String TAG = "StudentsPortalActivity";
+    ArrayList<String> list;
+    ArrayAdapter adapter;
+    Button button;
     FirebaseUser currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students_portal);
@@ -51,25 +56,45 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
         TextView userEmail = headerView.findViewById(R.id.user_email);
         userEmail.setText(currentUser.getEmail());
 
-        toggle.syncState();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("questions").child("General Knowledge");
-        reference.addValueEventListener(new ValueEventListener() {
+        button = findViewById(R.id.takeQuiz);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    Questions questionsModal = dataSnapshot.getValue(Questions.class);
-                    String txt = "Q1: "+  questionsModal.getStatement()+" a. "+questionsModal.getA1()+"b. "+questionsModal.getA2()
-                            +" c. "+questionsModal.getA3()+" d. "+questionsModal.getA4()+" ans. "+questionsModal.getCorrect();
-                    Log.d(TAG,txt);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
+            public void onClick(View view) {
+                Intent intent = new Intent(StudentsPortalActivity.this,QuestionsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
+
+        toggle.syncState();
+
+//        list = new ArrayList<>();
+//        adapter = new ArrayAdapter<String>(this,R.layout.list_questions,list);
+//        listView.setAdapter(adapter);
+
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("questions").child("General Knowledge");
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+//                list.clear();
+//                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+//                    Questions questionsModal = dataSnapshot.getValue(Questions.class);
+//                    String txt = "Q1: "+  questionsModal.getStatement()+" a. "+questionsModal.getA1()+"b. "+questionsModal.getA2()
+//                            +" c. "+questionsModal.getA3()+" d. "+questionsModal.getA4()+" ans. "+questionsModal.getCorrect();
+//                    list.add(questionsModal.getStatement());
+//                    list.add(questionsModal.getA1());
+//                    list.add(questionsModal.getA2());
+//                    list.add(questionsModal.getA3());
+//                    list.add(questionsModal.getA4());
+//                    Log.d(TAG,txt);
+//                }
+//                adapter.notifyDataSetChanged();
+//            }
+//            @Override
+//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+//
+//            }
+//        });
     }
 
     @Override
