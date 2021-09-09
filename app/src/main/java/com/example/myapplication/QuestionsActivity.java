@@ -3,8 +3,11 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.sax.EndElementListener;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -20,12 +23,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class QuestionsActivity extends AppCompatActivity {
+public class QuestionsActivity extends AppCompatActivity implements EndTestDialog.EndTestDialogListener {
     RecyclerView recyclerView;
     QuestionsAdapter adapter;
     ArrayList<Questions> list;
     RadioButton option1,option2,option3,option4;
     TextView timer;
+    Button endTest;
+    CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +73,15 @@ public class QuestionsActivity extends AppCompatActivity {
 
             }
         });
+        endTest = findViewById(R.id.endTestButton);
+        endTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog();
+            }
+        });
         timer = findViewById(R.id.timer);
-        new CountDownTimer(120*1000,1000){
+        countDownTimer = new CountDownTimer(120*1000,1000){
 
             @Override
             public void onTick(long l) {
@@ -96,7 +108,21 @@ public class QuestionsActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }
-        }.start();
+        };
+        countDownTimer.start();
 
+
+    }
+    public void openDialog(){
+        EndTestDialog endTestDialog = new EndTestDialog();
+        endTestDialog.show(getSupportFragmentManager(),"endTest dialog");
+    }
+
+    @Override
+    public void onEndNowClicked() {
+        countDownTimer.cancel();
+        Intent intent = new Intent(QuestionsActivity.this,StudentsPortalActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }
