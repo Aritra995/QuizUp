@@ -24,7 +24,7 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class StudentsPortalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class StudentsPortalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ExitAppDialog.ExitAppListener {
     private FirebaseAuth mAuth;
     private DrawerLayout drawer;
     private static final String TAG = "StudentsPortalActivity";
@@ -124,7 +124,8 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
         if (drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START);
         }else {
-            super.onBackPressed();
+            ExitAppDialog exitAppDialog = new ExitAppDialog();
+            exitAppDialog.show(getSupportFragmentManager(),"exit app");
         }
     }
 
@@ -157,5 +158,10 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onExitNowYesClicked() {
+        super.onBackPressed();
     }
 }

@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
-public class TeachersPortalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class TeachersPortalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ExitAppDialog.ExitAppListener {
     private FirebaseAuth mAuth;
     private DrawerLayout drawer;
     private static final String TAG = "TeachersPortalActivity";
@@ -63,7 +63,8 @@ public class TeachersPortalActivity extends AppCompatActivity implements Navigat
         if (drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START);
         }else {
-            super.onBackPressed();
+            ExitAppDialog exitAppDialog = new ExitAppDialog();
+            exitAppDialog.show(getSupportFragmentManager(),"exit app");
         }
     }
 
@@ -96,5 +97,10 @@ public class TeachersPortalActivity extends AppCompatActivity implements Navigat
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onExitNowYesClicked() {
+        super.onBackPressed();
     }
 }
