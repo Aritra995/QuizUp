@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ExitAppDialog.ExitAppListener {
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference myref = firebaseDatabase.getReference();
     private static final String TAG = "MainActivity";
@@ -52,7 +52,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Button logout = findViewById(R.id.button2);
 //        logout.setOnClickListener(this::onClick);
     }
-//    @Override
+
+    @Override
+    public void onBackPressed() {
+        ExitAppDialog exitAppDialog = new ExitAppDialog();
+        exitAppDialog.show(getSupportFragmentManager(),"exit app");
+    }
+    //    @Override
 //    protected void onStart() {
 //        super.onStart();
 //        FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -159,5 +165,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 ////            }
 //        }
 
+    }
+
+    @Override
+    public void onExitNowYesClicked() {
+        super.onBackPressed();
     }
 }
