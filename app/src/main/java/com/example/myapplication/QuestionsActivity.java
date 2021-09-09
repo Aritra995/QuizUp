@@ -1,9 +1,12 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Window;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,13 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class QuestionsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     QuestionsAdapter adapter;
     ArrayList<Questions> list;
     RadioButton option1,option2,option3,option4;
+    TextView timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,8 @@ public class QuestionsActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolBarQuiz);
         setSupportActionBar(toolbar);
+
+
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -60,6 +68,35 @@ public class QuestionsActivity extends AppCompatActivity {
 
             }
         });
+        timer = findViewById(R.id.timer);
+        new CountDownTimer(120*1000,1000){
+
+            @Override
+            public void onTick(long l) {
+                int minutes = (int) l/60000;
+                int seconds =(int) l % 60000 /1000;
+                String timerTxt="";
+                if(minutes < 10){
+                    timerTxt += "0";
+                }
+                timerTxt += minutes;
+                timerTxt += ":";
+                if(seconds < 10){
+                    timerTxt += "0";
+                }
+                timerTxt += seconds;
+
+                timer.setText(timerTxt);
+            }
+
+            @Override
+            public void onFinish() {
+                Intent intent = new Intent(QuestionsActivity.this,StudentsPortalActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
+            }
+        }.start();
 
     }
 }
