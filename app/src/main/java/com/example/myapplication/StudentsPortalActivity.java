@@ -32,6 +32,8 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
     ArrayAdapter adapter;
     Button button,GateButton;
     FirebaseUser currentUser;
+    TextView scoreView;
+    int score;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
@@ -43,6 +45,15 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
 
         Toolbar toolbar = findViewById(R.id.toolBar2);
         setSupportActionBar(toolbar);
+        scoreView = findViewById(R.id.scoreView);
+        Intent intent = this.getIntent();
+        score = intent.getIntExtra("score",0);
+        String txt = ""+score+"";
+
+        if( score != 9999 ){
+            scoreView.setText(txt);
+        }
+
 
         drawer = findViewById(R.id.students_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,

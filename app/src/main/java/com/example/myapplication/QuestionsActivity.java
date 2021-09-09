@@ -8,12 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.*;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class QuestionsActivity extends AppCompatActivity implements EndTestDialog.EndTestDialogListener {
+    private static final String TAG = "QuestionsActivity";
     RecyclerView recyclerView;
     QuestionsAdapter adapter;
     ArrayList<Questions> list;
@@ -31,9 +34,13 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
     Button endTest;
     CountDownTimer countDownTimer;
     private String category;
+    private ProgressBar progressBar3;
+    int i =0;
+    RadioButton option1,option2,option3,option4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //score = 0;
         // updating status bar color for api 21 and above
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -46,7 +53,7 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
         Toolbar toolbar = findViewById(R.id.toolBarQuiz);
         setSupportActionBar(toolbar);
 
-
+        progressBar3 = findViewById(R.id.progressBar3);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -105,9 +112,10 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
 
             @Override
             public void onFinish() {
-                Intent intent = new Intent(QuestionsActivity.this,StudentsPortalActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+//                Intent intent = new Intent(QuestionsActivity.this,StudentsPortalActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent);
+                calculateScore();
 
             }
         };
@@ -123,8 +131,78 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
     @Override
     public void onEndNowClicked() {
         countDownTimer.cancel();
-        Intent intent = new Intent(QuestionsActivity.this,StudentsPortalActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        calculateScore();
+//        Intent intent = new Intent(QuestionsActivity.this,StudentsPortalActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(intent);
+    }
+    private void calculateScore(){
+        progressBar3.setVisibility(View.VISIBLE);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("questions").child(category);
+        reference.addValueEventListener(new ValueEventListener() {
+            private int score;
+
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    Questions questionsModal = dataSnapshot.getValue(Questions.class);
+                    option1 = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.option1);
+                    option2 = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.option2);
+                    option3 = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.option3);
+                    option4 = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.option4);
+
+                    if( option1.isChecked() ){
+                        if( questionsModal.getCorrect().trim().toLowerCase().equals(option1.getText().toString().trim().toLowerCase()) ){
+                            this.score += 5;
+                        }
+                        else{
+                            this.score -= 1;
+                        }
+                    }
+                    else if(option2.isChecked()){
+                        if( questionsModal.getCorrect().trim().toLowerCase().equals(option2.getText().toString().trim().toLowerCase()) ){
+                            this.score += 5;
+                        }
+                        else{
+                            this.score -= 1;
+                        }
+                    }
+                    else if(option3.isChecked()){
+                        if( questionsModal.getCorrect().trim().toLowerCase().equals(option3.getText().toString().trim().toLowerCase()) ){
+                            Log.d(TAG,"opt correct: 3");
+                            this.score += 5;
+                        }
+                        else{
+                            Log.d(TAG,"opt: 3");
+                            this.score -= 1;
+                        }
+                    }
+                    else if(option4.isChecked()){
+                        if( questionsModal.getCorrect().trim().toLowerCase().equals(option4.getText().toString().trim().toLowerCase()) ){
+                            this.score += 5;
+                        }
+                        else{
+                            this.score -= 1;
+                        }
+                    }
+                    else{
+                        score -= 1;
+                    }
+                    i++;
+                }
+                adapter.notifyDataSetChanged();
+
+                progressBar3.setVisibility(View.INVISIBLE);
+                Intent intent = new Intent(QuestionsActivity.this,StudentsPortalActivity.class);
+                Log.d(TAG,"score: "+ score);
+                intent.putExtra("score", score);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
     }
 }
