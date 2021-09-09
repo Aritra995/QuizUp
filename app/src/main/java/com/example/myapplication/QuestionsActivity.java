@@ -27,10 +27,10 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
     RecyclerView recyclerView;
     QuestionsAdapter adapter;
     ArrayList<Questions> list;
-    RadioButton option1,option2,option3,option4;
     TextView timer;
     Button endTest;
     CountDownTimer countDownTimer;
+    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +56,10 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
         adapter = new QuestionsAdapter(this,list);
         recyclerView.setAdapter(adapter);
 
+        Intent intent = this.getIntent();
+        category = intent.getStringExtra("category");
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("questions").child("General Knowledge");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("questions").child(category);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {

@@ -33,12 +33,20 @@
                     app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
             <Button
-                    android:text="Take Quiz"
+                    android:text="current affairs"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/takeQuiz"
+                    android:layout_height="wrap_content" android:id="@+id/takeGkQuiz"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="100dp"/>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/takeGateQuiz"
+                    android:text="Gate cs"
+                    app:layout_constraintTop_toBottomOf="@+id/takeGkQuiz" android:layout_marginTop="24dp"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

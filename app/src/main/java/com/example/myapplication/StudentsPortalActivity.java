@@ -30,7 +30,7 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
     private static final String TAG = "StudentsPortalActivity";
     ArrayList<String> list;
     ArrayAdapter adapter;
-    Button button;
+    Button button,GateButton;
     FirebaseUser currentUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +56,22 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
         TextView userEmail = headerView.findViewById(R.id.user_email);
         userEmail.setText(currentUser.getEmail());
 
-        button = findViewById(R.id.takeQuiz);
+        button = findViewById(R.id.takeGkQuiz);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(StudentsPortalActivity.this,QuestionsActivity.class);
+                intent.putExtra("category","General Knowledge");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+        GateButton = findViewById(R.id.takeGateQuiz);
+        GateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StudentsPortalActivity.this,QuestionsActivity.class);
+                intent.putExtra("category","Gate CS");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
