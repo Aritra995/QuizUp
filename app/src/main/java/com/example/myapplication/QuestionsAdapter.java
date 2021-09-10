@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.databinding.BaseObservable;
 import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,8 +28,18 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
     @NotNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item,parent,false);
         return new MyViewHolder(view);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
@@ -38,6 +50,14 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
         holder.a2.setText(question.getA2());
         holder.a3.setText(question.getA3());
         holder.a4.setText(question.getA4());
+//        Model model = new Model();
+//        holder.optionRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+//                model.setSelectedId(i);
+//            }
+//        });
+//        holder.optionRadioGroup.check(model.getSelectedId());
 
         if( holder.a1.isChecked() ){
             holder.a2.setChecked(false);
@@ -69,7 +89,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView question;
         RadioButton a1,a2,a3,a4;
-        //RadioGroup optionRadioGroup;
+//        RadioGroup optionRadioGroup;
 
         public MyViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -81,4 +101,15 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
             //optionRadioGroup = itemView.findViewById(R.id.optionRadioGroup);
         }
     }
+//    public class Model extends BaseObservable {
+//        int selectedId;
+//
+//        public int getSelectedId() {
+//            return selectedId;
+//        }
+//
+//        public void setSelectedId(int selectedId) {
+//            this.selectedId = selectedId;
+//        }
+//    }
 }
