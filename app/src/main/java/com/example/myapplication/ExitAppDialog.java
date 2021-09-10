@@ -17,8 +17,8 @@ public class ExitAppDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Exit QuizUp?")
-                .setMessage("Are you sure you want to exit?")
+        builder.setTitle(listener.setTitle())
+                .setMessage(listener.setMessage())
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -35,6 +35,8 @@ public class ExitAppDialog extends AppCompatDialogFragment {
     }
     public interface ExitAppListener{
         void onExitNowYesClicked();
+        String setTitle();
+        String setMessage();
     }
 
     @Override

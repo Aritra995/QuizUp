@@ -171,4 +171,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onExitNowYesClicked() {
         super.onBackPressed();
     }
+
+    @Override
+    public String setTitle() {
+        return "Exit QuizUp?";
+    }
+
+    @Override
+    public String setMessage() {
+        return "Are you sure you want to exit?";
+    }
 }

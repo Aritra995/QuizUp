@@ -7,10 +7,7 @@ import android.sax.EndElementListener;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,12 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class QuestionsActivity extends AppCompatActivity implements EndTestDialog.EndTestDialogListener {
+public class QuestionsActivity extends AppCompatActivity implements EndTestDialog.EndTestDialogListener, ExitAppDialog.ExitAppListener {
     private static final String TAG = "QuestionsActivity";
     RecyclerView recyclerView;
     QuestionsAdapter adapter;
@@ -35,12 +29,11 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
     CountDownTimer countDownTimer;
     private String category;
     private ProgressBar progressBar3;
-    int i =0;
     RadioButton option1,option2,option3,option4;
+    RadioGroup radioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //score = 0;
         // updating status bar color for api 21 and above
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -61,13 +54,20 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
 
         list = new ArrayList<>();
         adapter = new QuestionsAdapter(this,list);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
         Intent intent = this.getIntent();
         category = intent.getStringExtra("category");
 
+        option1 = findViewById(R.id.option1);
+        option2 = findViewById(R.id.option2);
+        option3 = findViewById(R.id.option3);
+        option4 = findViewById(R.id.option4);
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("questions").child(category);
         reference.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 list.clear();
@@ -112,16 +112,10 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
 
             @Override
             public void onFinish() {
-//                Intent intent = new Intent(QuestionsActivity.this,StudentsPortalActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
                 calculateScore();
-
             }
         };
         countDownTimer.start();
-
-
     }
     public void openDialog(){
         EndTestDialog endTestDialog = new EndTestDialog();
@@ -132,25 +126,27 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
     public void onEndNowClicked() {
         countDownTimer.cancel();
         calculateScore();
-//        Intent intent = new Intent(QuestionsActivity.this,StudentsPortalActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(intent);
     }
     private void calculateScore(){
         progressBar3.setVisibility(View.VISIBLE);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("questions").child(category);
         reference.addValueEventListener(new ValueEventListener() {
             private int score;
+            private int i =0;
 
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Questions questionsModal = dataSnapshot.getValue(Questions.class);
-                    option1 = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.option1);
-                    option2 = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.option2);
-                    option3 = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.option3);
-                    option4 = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.option4);
-
+                    option1 = recyclerView.findViewById(R.id.option1);
+                    option2 = recyclerView.findViewById(R.id.option2);
+                    option3 = recyclerView.findViewById(R.id.option3);
+                    option4 = recyclerView.findViewById(R.id.option4);
+//                    RadioButton checked1 = recyclerView.findViewHolderForItemId(R.id.option1);
+//                    option2 = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.option2);
+//                    option3 = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.option3);
+//                    option4 = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.option4);
+                    //findViewHolderForAdapterPosition
                     if( option1.isChecked() ){
                         if( questionsModal.getCorrect().trim().toLowerCase().equals(option1.getText().toString().trim().toLowerCase()) ){
                             this.score += 5;
@@ -186,11 +182,11 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
                         }
                     }
                     else{
-                        score -= 1;
+                        this.score -= 1;
                     }
                     i++;
                 }
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
 
                 progressBar3.setVisibility(View.INVISIBLE);
                 Intent intent = new Intent(QuestionsActivity.this,StudentsPortalActivity.class);
@@ -204,5 +200,28 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
 
             }
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        ExitAppDialog exitAppDialog = new ExitAppDialog();
+        exitAppDialog.show(getSupportFragmentManager(),"end quiz");
+    }
+
+    @Override
+    public void onExitNowYesClicked() {
+        countDownTimer.cancel();
+        calculateScore();
+    }
+
+    @Override
+    public String setTitle() {
+        return "End Quiz?";
+    }
+
+    @Override
+    public String setMessage() {
+        return "Are you sure you want to end quiz?";
     }
 }

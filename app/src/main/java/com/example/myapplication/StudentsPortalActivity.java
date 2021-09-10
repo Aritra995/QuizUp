@@ -164,4 +164,14 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
     public void onExitNowYesClicked() {
         super.onBackPressed();
     }
+
+    @Override
+    public String setTitle() {
+        return "Exit QuizUp?";
+    }
+
+    @Override
+    public String setMessage() {
+        return "Are you sure you want to exit?";
+    }
 }

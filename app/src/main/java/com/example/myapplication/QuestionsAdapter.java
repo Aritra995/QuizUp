@@ -38,11 +38,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
         Questions question = list.get(position);
         holder.question.setText(question.getStatement());
