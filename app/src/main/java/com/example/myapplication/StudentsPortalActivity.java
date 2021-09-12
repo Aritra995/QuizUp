@@ -41,8 +41,7 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-
-
+        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students_portal);
 
@@ -52,11 +51,6 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
         Intent intent = this.getIntent();
         score = intent.getIntExtra("score",0);
         String txt = ""+score+"";
-
-//        if( score != 9999 ){
-//            scoreView.setText(txt);
-//        }
-
 
         drawer = findViewById(R.id.students_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,
@@ -104,55 +98,7 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
 
             }
         });
-//        button = findViewById(R.id.takeGkQuiz);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(StudentsPortalActivity.this,QuestionsActivity.class);
-//                intent.putExtra("category","General Knowledge");
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
-//            }
-//        });
-//        GateButton = findViewById(R.id.takeGateQuiz);
-//        GateButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(StudentsPortalActivity.this,QuestionsActivity.class);
-//                intent.putExtra("category","Gate CS");
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
-//            }
-//        });
         toggle.syncState();
-
-//        list = new ArrayList<>();
-//        adapter = new ArrayAdapter<String>(this,R.layout.category_item,list);
-//        listView.setAdapter(adapter);
-
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("questions").child("General Knowledge");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-//                list.clear();
-//                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-//                    Questions questionsModal = dataSnapshot.getValue(Questions.class);
-//                    String txt = "Q1: "+  questionsModal.getStatement()+" a. "+questionsModal.getA1()+"b. "+questionsModal.getA2()
-//                            +" c. "+questionsModal.getA3()+" d. "+questionsModal.getA4()+" ans. "+questionsModal.getCorrect();
-//                    list.add(questionsModal.getStatement());
-//                    list.add(questionsModal.getA1());
-//                    list.add(questionsModal.getA2());
-//                    list.add(questionsModal.getA3());
-//                    list.add(questionsModal.getA4());
-//                    Log.d(TAG,txt);
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-//
-//            }
-//        });
     }
 
     @Override

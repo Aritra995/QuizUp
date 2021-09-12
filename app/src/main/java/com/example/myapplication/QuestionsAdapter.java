@@ -68,27 +68,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
         TextView question;
         RadioButton a1,a2,a3,a4;
         RadioGroup optionRadioGroup;
-        static ArrayList<String> answers;
-
-        public static ArrayList<String> getAnswers() {
-            return answers;
-        }
-
-        public RadioButton getA1() {
-            return a1;
-        }
-
-        public RadioButton getA2() {
-            return a2;
-        }
-
-        public RadioButton getA3() {
-            return a3;
-        }
-
-        public RadioButton getA4() {
-            return a4;
-        }
 
         public MyViewHolder(@NonNull @NotNull View itemView,onItemClickListener listener) {
             super(itemView);
