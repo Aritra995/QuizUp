@@ -29,7 +29,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item,parent,false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view,mListener);
     }
 
     @Override
@@ -45,14 +45,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
         holder.a2.setText(question.getA2());
         holder.a3.setText(question.getA3());
         holder.a4.setText(question.getA4());
-//        Model model = new Model();
-//        holder.optionRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-//                model.setSelectedId(i);
-//            }
-//        });
-//        holder.optionRadioGroup.check(model.getSelectedId());
 
         if( holder.a1.isChecked() ){
             holder.a2.setChecked(false);
@@ -80,31 +72,109 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
     public int getItemCount() {
         return list.size();
     }
+    private onItemClickListener mListener;
+    public interface onItemClickListener{
+        void onItemClick(int position);
+        void onA1Click(int position);
+        void onA2Click(int position);
+        void onA3Click(int position);
+        void onA4Click(int position);
+    }
+
+    public void setonItemClickListener(onItemClickListener listener){
+        mListener = listener;
+    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView question;
         RadioButton a1,a2,a3,a4;
-//        RadioGroup optionRadioGroup;
+        RadioGroup optionRadioGroup;
+        static ArrayList<String> answers;
 
-        public MyViewHolder(@NonNull @NotNull View itemView) {
+        public static ArrayList<String> getAnswers() {
+            return answers;
+        }
+
+        public RadioButton getA1() {
+            return a1;
+        }
+
+        public RadioButton getA2() {
+            return a2;
+        }
+
+        public RadioButton getA3() {
+            return a3;
+        }
+
+        public RadioButton getA4() {
+            return a4;
+        }
+
+        public MyViewHolder(@NonNull @NotNull View itemView,onItemClickListener listener) {
             super(itemView);
             question = itemView.findViewById(R.id.question);
             a1 = itemView.findViewById(R.id.option1);
             a2 = itemView.findViewById(R.id.option2);
             a3 = itemView.findViewById(R.id.option3);
             a4 = itemView.findViewById(R.id.option4);
-            //optionRadioGroup = itemView.findViewById(R.id.optionRadioGroup);
+            optionRadioGroup = itemView.findViewById(R.id.optionRadioGroup);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if( listener != null ){
+                        int position = getAdapterPosition();
+                        if( position != RecyclerView.NO_POSITION ){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+            a1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if( listener != null ){
+                        int position = getAdapterPosition();
+                        if( position != RecyclerView.NO_POSITION ){
+                            listener.onA1Click(position);
+                        }
+                    }
+                }
+            });
+            a2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if( listener != null ){
+                        int position = getAdapterPosition();
+                        if( position != RecyclerView.NO_POSITION ){
+                            listener.onA2Click(position);
+                        }
+                    }
+                }
+            });
+            a3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if( listener != null ){
+                        int position = getAdapterPosition();
+                        if( position != RecyclerView.NO_POSITION ){
+                            listener.onA3Click(position);
+                        }
+                    }
+                }
+            });
+            a4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if( listener != null ){
+                        int position = getAdapterPosition();
+                        if( position != RecyclerView.NO_POSITION ){
+                            listener.onA4Click(position);
+                        }
+                    }
+                }
+            });
         }
     }
-//    public class Model extends BaseObservable {
-//        int selectedId;
-//
-//        public int getSelectedId() {
-//            return selectedId;
-//        }
-//
-//        public void setSelectedId(int selectedId) {
-//            this.selectedId = selectedId;
-//        }
-//    }
+
 }
