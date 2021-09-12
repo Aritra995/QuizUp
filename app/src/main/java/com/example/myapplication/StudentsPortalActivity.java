@@ -78,6 +78,16 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
         adapter = new CategoriesAdapter(this,list);
         recyclerView.setAdapter(adapter);
 
+        adapter.setOnItemClickListener(new CategoriesAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(StudentsPortalActivity.this,QuestionsActivity.class);
+                intent.putExtra("category",list.get(position));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("categories");
         reference.addValueEventListener(new ValueEventListener() {
 

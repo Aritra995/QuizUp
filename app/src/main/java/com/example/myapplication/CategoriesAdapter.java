@@ -25,7 +25,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item,parent,false);
-        return new CategoryViewHolder(view);
+        return new CategoryViewHolder(view,mListener);
     }
 
     @Override
@@ -44,12 +44,30 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     public int getItemViewType(int position) {
         return position;
     }
+    private onItemClickListener mListener;
+    public interface onItemClickListener{
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListener(onItemClickListener listener){
+        mListener = listener;
+    }
 
     public static class CategoryViewHolder extends RecyclerView.ViewHolder{
         TextView categoryText;
-        public CategoryViewHolder(@NonNull @NotNull View itemView) {
+        public CategoryViewHolder(@NonNull @NotNull View itemView,onItemClickListener listener) {
             super(itemView);
             categoryText = itemView.findViewById(R.id.categoryTxt);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if( listener != null ){
+                        int position = getAdapterPosition();
+                        if( position != RecyclerView.NO_POSITION ){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
