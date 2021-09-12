@@ -135,8 +135,7 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
             }
         });
         timer = findViewById(R.id.timer);
-        countDownTimer = new CountDownTimer(120*1000,1000){
-
+        countDownTimer = new CountDownTimer( list.size()*180*1000,1000){
             @Override
             public void onTick(long l) {
                 int minutes = (int) l/60000;

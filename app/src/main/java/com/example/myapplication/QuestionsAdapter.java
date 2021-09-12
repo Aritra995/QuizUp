@@ -45,27 +45,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.MyVi
         holder.a2.setText(question.getA2());
         holder.a3.setText(question.getA3());
         holder.a4.setText(question.getA4());
-
-        if( holder.a1.isChecked() ){
-            holder.a2.setChecked(false);
-            holder.a3.setChecked(false);
-            holder.a4.setChecked(false);
-        }
-        else if(holder.a2.isChecked()){
-            holder.a1.setChecked(false);
-            holder.a3.setChecked(false);
-            holder.a4.setChecked(false);
-        }
-        else if(holder.a3.isChecked()){
-            holder.a1.setChecked(false);
-            holder.a2.setChecked(false);
-            holder.a4.setChecked(false);
-        }
-        else if(holder.a4.isChecked()){
-            holder.a1.setChecked(false);
-            holder.a2.setChecked(false);
-            holder.a3.setChecked(false);
-        }
     }
 
     @Override
