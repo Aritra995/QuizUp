@@ -108,13 +108,13 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("questions").child(category);
         reference.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Questions questionsModal = dataSnapshot.getValue(Questions.class);
                     answersList.add(questionsModal.getCorrect());
+                    selected.add("quizup");
                     list.add(questionsModal);
                 }
                 adapter.notifyDataSetChanged();
@@ -175,7 +175,8 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
         for(int i =0;i < answersList.size();i++){
             if( selected.get(i).trim().toLowerCase().equals(answersList.get(i).trim().toLowerCase()) ){
                 this.score += 5;
-            }else{
+            }
+            else{
                 this.score -= 1;
             }
         }
