@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-import android.content.Intent;
-
 public class Questions {
     private String statement;
     private String a1;
@@ -27,47 +25,28 @@ public class Questions {
         return statement;
     }
 
-    public void setStatement(String statement) {
-        this.statement = statement;
-    }
-
     public String getA1() {
         return a1;
     }
 
-    public void setA1(String a1) {
-        this.a1 = a1;
-    }
 
     public String getA2() {
         return a2;
     }
 
-    public void setA2(String a2) {
-        this.a2 = a2;
-    }
 
     public String getA3() {
         return a3;
     }
 
-    public void setA3(String a3) {
-        this.a3 = a3;
-    }
 
     public String getA4() {
         return a4;
     }
 
-    public void setA4(String a4) {
-        this.a4 = a4;
-    }
 
     public String getCorrect() {
         return correct;
     }
 
-    public void setCorrect(String correct) {
-        this.correct = correct;
-    }
 }

@@ -32,10 +32,8 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
     CountDownTimer countDownTimer;
     private String category;
     private ProgressBar progressBar3;
-    RadioButton option1,option2,option3,option4,checked;
-    RadioGroup radioGroup;
+    RadioButton option1,option2,option3,option4;
     private int score = 0;
-    //private int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

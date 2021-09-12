@@ -12,6 +12,8 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -27,9 +29,10 @@ import java.util.Locale;
 public class StudentsPortalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ExitAppDialog.ExitAppListener {
     private FirebaseAuth mAuth;
     private DrawerLayout drawer;
+    private CategoriesAdapter adapter;
+    private RecyclerView recyclerView;
     private static final String TAG = "StudentsPortalActivity";
     ArrayList<String> list;
-    ArrayAdapter adapter;
     Button button,GateButton;
     FirebaseUser currentUser;
     TextView scoreView;
@@ -45,14 +48,14 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
 
         Toolbar toolbar = findViewById(R.id.toolBar2);
         setSupportActionBar(toolbar);
-        scoreView = findViewById(R.id.scoreView);
+        //scoreView = findViewById(R.id.scoreView);
         Intent intent = this.getIntent();
         score = intent.getIntExtra("score",0);
         String txt = ""+score+"";
 
-        if( score != 9999 ){
-            scoreView.setText(txt);
-        }
+//        if( score != 9999 ){
+//            scoreView.setText(txt);
+//        }
 
 
         drawer = findViewById(R.id.students_drawer_layout);
@@ -67,31 +70,54 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
         TextView userEmail = headerView.findViewById(R.id.user_email);
         userEmail.setText(currentUser.getEmail());
 
-        button = findViewById(R.id.takeGkQuiz);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StudentsPortalActivity.this,QuestionsActivity.class);
-                intent.putExtra("category","General Knowledge");
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-        GateButton = findViewById(R.id.takeGateQuiz);
-        GateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StudentsPortalActivity.this,QuestionsActivity.class);
-                intent.putExtra("category","Gate CS");
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
+        recyclerView = findViewById(R.id.categoryRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        list = new ArrayList<>();
+        adapter = new CategoriesAdapter(this,list);
+        recyclerView.setAdapter(adapter);
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("categories");
+        reference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                list.clear();
+                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    list.add(dataSnapshot.getValue().toString());
+                }
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+//        button = findViewById(R.id.takeGkQuiz);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(StudentsPortalActivity.this,QuestionsActivity.class);
+//                intent.putExtra("category","General Knowledge");
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent);
+//            }
+//        });
+//        GateButton = findViewById(R.id.takeGateQuiz);
+//        GateButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(StudentsPortalActivity.this,QuestionsActivity.class);
+//                intent.putExtra("category","Gate CS");
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent);
+//            }
+//        });
         toggle.syncState();
 
 //        list = new ArrayList<>();
-//        adapter = new ArrayAdapter<String>(this,R.layout.list_questions,list);
+//        adapter = new ArrayAdapter<String>(this,R.layout.category_item,list);
 //        listView.setAdapter(adapter);
 
 //        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("questions").child("General Knowledge");
