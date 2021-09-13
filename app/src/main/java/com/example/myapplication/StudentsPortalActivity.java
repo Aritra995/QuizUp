@@ -36,6 +36,7 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
     Button button,GateButton;
     FirebaseUser currentUser;
     TextView scoreView;
+    Intent intent;
     int score;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +123,11 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
                 break;
             case R.id.resetPassword:
                 resetPassword(currentUser.getEmail());
+                break;
+            case R.id.quizes:
+                intent = new Intent(StudentsPortalActivity.this,StudentsPortalActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

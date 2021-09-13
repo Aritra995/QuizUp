@@ -6,8 +6,12 @@
           android:top="-400dp">
         <shape
                 android:shape="oval">
-            <solid
-                    android:color="@color/light_blue_600"/>
+            <gradient
+                    android:angle="135"
+                    android:centerColor="#0F52BA"
+                    android:endColor="@color/app_bar_color"
+                    android:startColor="#6495ED"
+                    android:type="linear"/>
         </shape>
 
     </item>
