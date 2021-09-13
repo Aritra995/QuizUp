@@ -72,7 +72,6 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
         list = new ArrayList<>();
         adapter = new CategoriesAdapter(this,list);
         recyclerView.setAdapter(adapter);
-
         adapter.setOnItemClickListener(new CategoriesAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -82,10 +81,8 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
                 startActivity(intent);
             }
         });
-
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("categories");
         reference.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 list.clear();
@@ -127,6 +124,10 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
             case R.id.quizes:
                 intent = new Intent(StudentsPortalActivity.this,StudentsPortalActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                break;
+            case R.id.quizHistory:
+                intent = new Intent(StudentsPortalActivity.this,ProgressHistory.class);
                 startActivity(intent);
                 break;
         }
