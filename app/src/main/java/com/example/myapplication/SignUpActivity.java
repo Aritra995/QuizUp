@@ -15,6 +15,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Random;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     EditText email, Password;
@@ -23,6 +27,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private FirebaseAuth mAuth;
     ImageButton passwordtoggle;
     private static final String TAG = "SignUpActivity";
+    Random random = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                             Log.d(TAG, "createUserWithEmail:success" + user.getDisplayName());
+                            initializeUser();
 //                            mAuth.signOut();
                             Toast.makeText(SignUpActivity.this,"Signup success",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignUpActivity.this, EmailValidationActivity.class);
@@ -101,5 +107,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }else{
             return false;
         }
+    }
+    private void initializeUser(){
+        int id = Math.abs(random.nextInt());
+        String setId = ""+id;
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid());
+        Progress progress = new Progress();
+        reference.child(setId).setValue(progress);
     }
 }
