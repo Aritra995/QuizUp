@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
@@ -83,16 +85,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                             Log.d(TAG, "createUserWithEmail:success" + user.getDisplayName());
-                            initializeUser();
+                            //initializeUser();
 //                            mAuth.signOut();
                             Toast.makeText(SignUpActivity.this,"Signup success",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignUpActivity.this, EmailValidationActivity.class);
                             startActivity(intent);
                         } else {
-                            // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(SignUpActivity.this, "Authentication failed.Try Logging In",
                                     Toast.LENGTH_SHORT).show();
@@ -108,11 +108,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             return false;
         }
     }
-    private void initializeUser(){
-        int id = Math.abs(random.nextInt());
-        String setId = ""+id;
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid());
-        Progress progress = new Progress();
-        reference.child(setId).setValue(progress);
+    private String dateFormatter(){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String datetxt = ""+formatter.format(date);
+        return datetxt;
     }
+//    private void initializeUser(){
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid());
+//        Progress progress = new Progress(0,0,0,0,0,0,"nocategory",dateFormatter());
+//        reference.child("0").setValue(progress);
+//    }
 }

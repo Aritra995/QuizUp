@@ -11,9 +11,14 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.MyApplication">
-        <activity android:name=".ProgressHistory"
+        <activity android:name=".ProgressRecyclerviewActivity"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.MyApplication.NoActionBar">
+        </activity>
+        <activity
+                android:name=".ProgressHistory"
+                android:screenOrientation="portrait"
+                android:theme="@style/Theme.MyApplication.NoActionBar">
         </activity>
         <activity
                 android:name=".QuestionsActivity"

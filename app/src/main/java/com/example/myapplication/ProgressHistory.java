@@ -14,6 +14,8 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
@@ -25,6 +27,9 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
     private static final String TAG = "ProgressHistory";
     Button button;
     ArrayList<Progress> singleCheckArray;
+    private ArrayList<Progress> list;
+    private ProgressHistoryAdapter adapter;
+    private RecyclerView recyclerView;
     private FirebaseAuth mAuth;
     private boolean norecords;
     ImageView search,lock;
@@ -36,6 +41,8 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
         this.norecords = norecords;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress_history);
+
+        mAuth = FirebaseAuth.getInstance();
 
         Toolbar toolbar = findViewById(R.id.toolBar3);
         setSupportActionBar(toolbar);
@@ -50,7 +57,36 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
 
         singleCheckArray = new ArrayList<>();
 
-        mAuth = FirebaseAuth.getInstance();
+
+
+//        recyclerView = findViewById(R.id.progressHistoryRecyclerView);
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//
+//        list = new ArrayList<>();
+//        adapter = new ProgressHistoryAdapter(this,list);
+//        recyclerView.setAdapter(adapter);
+
+
+        //show recyclerview
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+//                list.clear();
+//                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+////                    Questions questionsModal = dataSnapshot.getValue(Questions.class);
+//                    Progress progress = dataSnapshot.getValue(Progress.class);
+//                    list.add(progress);
+//                }
+//                adapter.notifyDataSetChanged();
+//            }
+//            @Override
+//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+//
+//            }
+//        });
+
 
         search = findViewById(R.id.imageView);
         lock = findViewById(R.id.lockIcon);
@@ -68,6 +104,25 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
         nullInitializedUserCheck();
         toggle.syncState();
     }
+//    private void showRecyclerView(DatabaseReference reference){
+////        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+//                list.clear();
+//                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
+////                    Questions questionsModal = dataSnapshot.getValue(Questions.class);
+//                    Progress progress = dataSnapshot.getValue(Progress.class);
+//                    list.add(progress);
+//                }
+//                adapter.notifyDataSetChanged();
+//            }
+//            @Override
+//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
     private void nullInitializedUserCheck(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
         reference.addValueEventListener(new ValueEventListener() {
@@ -78,8 +133,11 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
                     Progress progress = dataSnapshot.getValue(Progress.class);
                     singleCheckArray.add(progress);
                 }
-                if( singleCheckArray.size() > 1 ){
-                    UpdateUIOnRecordFound();
+                if( singleCheckArray.size() >= 1 ){
+                    //showRecyclerView(reference);
+                    Intent intent = new Intent(ProgressHistory.this,ProgressRecyclerviewActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 }
             }
             @Override

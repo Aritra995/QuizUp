@@ -16,12 +16,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
 import org.jetbrains.annotations.NotNull;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 
 public class QuestionsActivity extends AppCompatActivity implements EndTestDialog.EndTestDialogListener, ExitAppDialog.ExitAppListener {
     private static final String TAG = "QuestionsActivity";
+    private FirebaseAuth mAuth;
     RecyclerView recyclerView;
     QuestionsAdapter adapter;
     ArrayList<Questions> list;
@@ -33,12 +39,14 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
     private String category;
     private ProgressBar progressBar3;
     RadioButton option1,option2,option3,option4;
-    private int score = 0;
+    private int score = 0,correct =0,attempted=0;
+    Random random = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // updating status bar color for api 21 and above
         this.score = score;
+        mAuth = FirebaseAuth.getInstance();
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(getResources().getColor(R.color.app_bar_color));
@@ -175,17 +183,34 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
         for(int i =0;i < answersList.size();i++){
             if( selected.get(i).trim().toLowerCase().equals(answersList.get(i).trim().toLowerCase()) ){
                 this.score += 5;
+                this.correct++;
+                this.attempted++;
             }
             else{
+                if( !selected.get(i).equals("quizup") ){
+                    this.attempted++;
+                }
                 this.score -= 1;
             }
         }
+        // saving to db
+        int id = Math.abs(random.nextInt());
+        String setId = ""+id;
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid());
+        Progress progress = new Progress(""+answersList.size(),""+correct,""+(attempted-correct),""+attempted,""+(answersList.size()-attempted),""+score,category,dateFormatter());
+        reference.child(setId).setValue(progress);
         progressBar3.setVisibility(View.INVISIBLE);
-        Intent intent = new Intent(QuestionsActivity.this,StudentsPortalActivity.class);
+        Intent intent = new Intent(QuestionsActivity.this,ProgressHistory.class);
         Log.d(TAG,"score: "+ score);
         intent.putExtra("score", score);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+    private String dateFormatter(){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String datetxt = ""+formatter.format(date);
+        return datetxt;
     }
 
     @Override
