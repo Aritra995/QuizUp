@@ -189,8 +189,8 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
             else{
                 if( !selected.get(i).equals("quizup") ){
                     this.attempted++;
+                    this.score -= 1;
                 }
-                this.score -= 1;
             }
         }
         // saving to db
