@@ -6,6 +6,7 @@ import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +24,13 @@ public class SplashActivity extends AppCompatActivity {
         fadeout.setStartOffset(500);
         fadeout.setDuration(1800);
         TextView textView = findViewById(R.id.textView6);
+        ImageView imageQ = findViewById(R.id.imageViewQ);
+        ImageView graph = findViewById(R.id.graph);
+        TextView tagLine = findViewById(R.id.tagline);
         textView.setAnimation(fadeout);
+        imageQ.setAnimation(fadeout);
+        graph.setAnimation(fadeout);
+        tagLine.setAnimation(fadeout);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
