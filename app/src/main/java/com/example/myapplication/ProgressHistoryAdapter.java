@@ -39,7 +39,6 @@ public class ProgressHistoryAdapter extends RecyclerView.Adapter<ProgressHistory
         holder.wrong.setText(progress.getWrong());
         holder.score.setText(progress.getScore());
         holder.DateTxt.setText(progress.getDate());
-        //holder.TimeTxt.setText(progress.getTime());
     }
 
     @Override
@@ -60,7 +59,6 @@ public class ProgressHistoryAdapter extends RecyclerView.Adapter<ProgressHistory
             wrong = itemView.findViewById(R.id.wrong);
             score = itemView.findViewById(R.id.scoretxt);
             DateTxt = itemView.findViewById(R.id.datetxt);
-            //TimeTxt = itemView.findViewById(R.id.timetxt);
         }
     }
 }

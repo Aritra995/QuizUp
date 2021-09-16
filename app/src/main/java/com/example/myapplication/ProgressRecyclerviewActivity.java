@@ -3,6 +3,8 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -45,6 +47,10 @@ public class ProgressRecyclerviewActivity extends AppCompatActivity implements N
 
         NavigationView navigationView = findViewById(R.id.progressShow_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView userEmail = headerView.findViewById(R.id.user_email);
+        userEmail.setText(mAuth.getCurrentUser().getEmail());
 
         recyclerView = findViewById(R.id.progressHistoryRecyclerView);
         recyclerView.setHasFixedSize(true);
