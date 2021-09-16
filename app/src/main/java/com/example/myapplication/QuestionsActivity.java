@@ -141,7 +141,7 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
             }
         });
         timer = findViewById(R.id.timer);
-        countDownTimer = new CountDownTimer( 180*1000,1000){
+        countDownTimer = new CountDownTimer( 1800*1000,1000){
             @Override
             public void onTick(long l) {
                 int minutes = (int) l/60000;
@@ -179,7 +179,6 @@ public class QuestionsActivity extends AppCompatActivity implements EndTestDialo
     }
     private void calculateScore(){
         progressBar3.setVisibility(View.VISIBLE);
-//        selected = QuestionsAdapter.MyViewHolder.getAnswers();
         for(int i =0;i < answersList.size();i++){
             if( selected.get(i).trim().toLowerCase().equals(answersList.get(i).trim().toLowerCase()) ){
                 this.score += 5;
