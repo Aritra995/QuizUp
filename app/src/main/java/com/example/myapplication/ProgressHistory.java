@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +14,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
@@ -35,6 +35,7 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
     ImageView search,lock;
     TextView txt1,txt2;
     private DrawerLayout drawer;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,41 +58,11 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
 
         singleCheckArray = new ArrayList<>();
 
-
-
-//        recyclerView = findViewById(R.id.progressHistoryRecyclerView);
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//
-//        list = new ArrayList<>();
-//        adapter = new ProgressHistoryAdapter(this,list);
-//        recyclerView.setAdapter(adapter);
-
-
-        //show recyclerview
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-//                list.clear();
-//                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-////                    Questions questionsModal = dataSnapshot.getValue(Questions.class);
-//                    Progress progress = dataSnapshot.getValue(Progress.class);
-//                    list.add(progress);
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-//
-//            }
-//        });
-
-
         search = findViewById(R.id.imageView);
         lock = findViewById(R.id.lockIcon);
         txt1 = findViewById(R.id.textView10);
         txt2 = findViewById(R.id.textView13);
+        progressBar = findViewById(R.id.progressBarTop);
         button = findViewById(R.id.seeQuizBtn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,25 +75,18 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
         nullInitializedUserCheck();
         toggle.syncState();
     }
-//    private void showRecyclerView(DatabaseReference reference){
-////        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-//                list.clear();
-//                for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-////                    Questions questionsModal = dataSnapshot.getValue(Questions.class);
-//                    Progress progress = dataSnapshot.getValue(Progress.class);
-//                    list.add(progress);
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        }else {
+            Intent intent = new Intent(ProgressHistory.this, StudentsPortalActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
+    }
+
     private void nullInitializedUserCheck(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
         reference.addValueEventListener(new ValueEventListener() {
@@ -139,6 +103,9 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
+                else{
+                    UpdateUIOnRecordFound();
+                }
             }
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {}
@@ -146,12 +113,13 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
     }
 
     private void UpdateUIOnRecordFound(){
-        search.setVisibility(View.INVISIBLE);
-        lock.setVisibility(View.INVISIBLE);
-        txt1.setVisibility(View.INVISIBLE);
-        txt2.setVisibility(View.INVISIBLE);
-        button.setFocusable(false);
-        button.setVisibility(View.INVISIBLE);
+        search.setVisibility(View.VISIBLE);
+        lock.setVisibility(View.VISIBLE);
+        txt1.setVisibility(View.VISIBLE);
+        txt2.setVisibility(View.VISIBLE);
+        //button.setFocusable(false);
+        button.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -172,8 +140,26 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
                 intent = new Intent(ProgressHistory.this,ProgressHistory.class);
                 startActivity(intent);
                 break;
+            case R.id.resetPassword:
+                resetPassword(mAuth.getCurrentUser().getEmail());
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void resetPassword(String emailAddress){
+        mAuth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                            Toast.makeText(ProgressHistory.this,"Email sent.Check Inbox",Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(ProgressHistory.this,"Email not registered.Signup first",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 }
