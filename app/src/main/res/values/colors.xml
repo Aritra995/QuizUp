@@ -15,4 +15,5 @@
     <color name="app_bar_color">#191970</color>
     <color name="red_warning">#FF0000</color>
     <color name="red_button">#FF4500</color>
+    <color name="orange_text">#FFD585</color>
 </resources>

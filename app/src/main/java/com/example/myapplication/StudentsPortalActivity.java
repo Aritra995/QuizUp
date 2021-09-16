@@ -75,7 +75,7 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
         adapter.setOnItemClickListener(new CategoriesAdapter.onItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(StudentsPortalActivity.this,QuestionsActivity.class);
+                Intent intent = new Intent(StudentsPortalActivity.this,InstructionsActivity.class);
                 intent.putExtra("category",list.get(position));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
