@@ -18,7 +18,6 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 android:elevation="4dp"/>
-
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/activity_student"
                 android:layout_width="match_parent"
