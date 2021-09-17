@@ -11,6 +11,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.MyApplication">
+        <activity android:name=".FeedbackActivity">
+        </activity>
         <activity android:name=".InstructionsActivity">
         </activity>
         <activity

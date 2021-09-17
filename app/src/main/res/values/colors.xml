@@ -17,4 +17,5 @@
     <color name="red_warning">#FF0000</color>
     <color name="red_button">#FF4500</color>
     <color name="orange_text">#FFD585</color>
+    <color name="green">#228B22</color>
 </resources>
