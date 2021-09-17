@@ -130,7 +130,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         if(currentUser != null && currentUser.isEmailVerified()){
             disable();
             adminCheck();
-            //Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
         }
     }
 
@@ -157,7 +156,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             if( user.isEmailVerified() ){
@@ -190,7 +188,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                         Intent intent = new Intent(getActivity(),TeachersPortalActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         getContext().startActivity(intent);
-//                        break;
                     }
                 }
                 if( isAdmin() == false ) {
@@ -200,11 +197,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     getActivity().startActivity(intent);
                 }
-                //redirect("student");
-//                Intent intent = new Intent(getActivity(),StudentsPortalActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                getActivity().startActivity(intent);
-                //Navigation.findNavController(VIEW).navigate(R.id.action_homeFragment_to_userHomeFragment);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -214,11 +206,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     }
     private void redirect(String userType){
         switch (userType){
-//            case "teacher":
-//                Intent intent = new Intent(getActivity(),TeachersPortalActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                getActivity().startActivity(intent);
-//                break;
             case "student":
                 Intent intent = new Intent(getActivity(),StudentsPortalActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

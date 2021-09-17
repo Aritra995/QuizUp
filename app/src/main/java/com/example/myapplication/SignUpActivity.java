@@ -94,8 +94,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Log.d(TAG, "createUserWithEmail:success" + user.getDisplayName());
-                            //initializeUser();
-//                            mAuth.signOut();
                             Toast.makeText(SignUpActivity.this,"Signup success",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignUpActivity.this, EmailValidationActivity.class);
                             startActivity(intent);
@@ -121,9 +119,4 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String datetxt = ""+formatter.format(date);
         return datetxt;
     }
-//    private void initializeUser(){
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid());
-//        Progress progress = new Progress(0,0,0,0,0,0,"nocategory",dateFormatter());
-//        reference.child("0").setValue(progress);
-//    }
 }

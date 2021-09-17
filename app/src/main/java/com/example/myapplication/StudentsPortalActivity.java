@@ -48,7 +48,6 @@ public class StudentsPortalActivity extends AppCompatActivity implements Navigat
 
         Toolbar toolbar = findViewById(R.id.toolBar2);
         setSupportActionBar(toolbar);
-        //scoreView = findViewById(R.id.scoreView);
         Intent intent = this.getIntent();
         score = intent.getIntExtra("score",0);
         String txt = ""+score+"";

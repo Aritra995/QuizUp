@@ -65,7 +65,6 @@ public class SignIn extends Fragment implements View.OnClickListener{
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 Log.d(TAG, "createUserWithEmail:success "+user.getEmail());
                                 updateUI();
@@ -93,14 +92,6 @@ public class SignIn extends Fragment implements View.OnClickListener{
                 String EMAIL = email.getText().toString();
                 Log.d(TAG,"email: "+EMAIL);
                 String PASSWORD = password.getText().toString();
-//                if(emailValidator(email) && PASSWORD.length() >= 6){
-//                    view.findViewById(R.id.passwordWarning).setVisibility(View.INVISIBLE);
-//                    view.findViewById(R.id.emailWarning).setVisibility(View.INVISIBLE);
-//                    authentication(EMAIL,PASSWORD);
-//                }
-//                else if( emailValidator(email) == true && PASSWORD.length() < 6 ){
-//                    view.findViewById(R.id.passwordWarning).setVisibility(View.VISIBLE);
-//                }
                 authentication(EMAIL,PASSWORD);
                 Log.d(TAG,"password: "+PASSWORD);
             }

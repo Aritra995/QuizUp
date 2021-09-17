@@ -1,12 +1,9 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toolbar;
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +11,6 @@ import android.view.ViewGroup;
 import androidx.navigation.Navigation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.*;
 
 public class UserHomeFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "MainActivity";
@@ -30,23 +26,6 @@ public class UserHomeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
-//        FirebaseUser user = mAuth.getCurrentUser();
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("adminUsers");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-//                    if( user.getEmail() == snapshot.getValue().toString() ){
-//                        Intent intent = new Intent(getActivity(),TeachersPortalActivity.class);
-//                        getActivity().startActivity(intent);
-//                    }
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
         View view= inflater.inflate(R.layout.fragment_user_home, container, false);
         VIEW = view;
         textView = view.findViewById(R.id.user_name);

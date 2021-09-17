@@ -98,7 +98,6 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
                     singleCheckArray.add(progress);
                 }
                 if( singleCheckArray.size() >= 1 ){
-                    //showRecyclerView(reference);
                     Intent intent = new Intent(ProgressHistory.this,ProgressRecyclerviewActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
@@ -117,7 +116,6 @@ public class ProgressHistory extends AppCompatActivity implements NavigationView
         lock.setVisibility(View.VISIBLE);
         txt1.setVisibility(View.VISIBLE);
         txt2.setVisibility(View.VISIBLE);
-        //button.setFocusable(false);
         button.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
     }

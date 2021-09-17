@@ -52,9 +52,6 @@ public class TeachersPortalActivity extends AppCompatActivity implements Navigat
         View headerView = navigationView.getHeaderView(0);
         TextView userEmail = headerView.findViewById(R.id.user_email);
         userEmail.setText(currentUser.getEmail());
-//        ImageView userDp = headerView.findViewById(R.id.userDp);
-//        Log.d(TAG,"url: "+currentUser.getPhotoUrl());
-//        Picasso.get().load(currentUser.getPhotoUrl()).into(userDp);
         toggle.syncState();
     }
 
