@@ -45,11 +45,13 @@
         </activity>
         <activity
                 android:name=".EmailValidationActivity"
-                android:screenOrientation="portrait">
+                android:screenOrientation="portrait"
+                android:theme="@style/splashTheme">
         </activity>
         <activity
                 android:name=".SignUpActivity"
-                android:screenOrientation="portrait">
+                android:screenOrientation="portrait"
+                android:theme="@style/splashTheme">
         </activity>
         <activity
                 android:name=".SplashActivity"
@@ -63,7 +65,8 @@
         </activity>
         <activity
                 android:name=".MainActivity"
-                android:screenOrientation="portrait">
+                android:screenOrientation="portrait"
+                android:theme="@style/splashTheme">
         </activity>
     </application>
 
