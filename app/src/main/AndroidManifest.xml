@@ -11,9 +11,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.MyApplication">
-        <activity android:name=".FeedbackActivity">
+        <activity android:name=".FeedbackActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/splashTheme">
         </activity>
-        <activity android:name=".InstructionsActivity">
+        <activity android:name=".InstructionsActivity"
+                  android:screenOrientation="portrait">
         </activity>
         <activity
                 android:name=".ProgressRecyclerviewActivity"
